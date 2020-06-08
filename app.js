@@ -1,28 +1,36 @@
 const express = require('express')
 const app = express()
-
-const exphbs = require('express-handlebars');
-
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-
-const city = 'Clayton'
-const url = `api.openweathermap.org/data/2.5/weather?q=${city},uk&appid=29a1bb60ec502a9a3f85a501a5521fa3`
-
+const path = require("path")
+const exphbs = require('hbs');
 
 require('dotenv').config();
+
+const publicStaticDirPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../views')
+const partialsPath = path.join(__dirname, '../views/partials')
+
+
+app.set('view engine', 'exphbs',);
+app.set('views', viewsPath);
+exphbs.registerPartials(partialsPath);
+app.use(express.static(publicStaticDirPath))
 
 app.get('/', (req, res) => {
     res.send("hello")
 })
 
 app.get('/weather', (req, res) => {
-    res.send('weather endpoint')
+    const address = req.query.address
+    weatherData(address, (result) => {
+        console.log(result)
+    })
 })
 
 app.get('*', (req, res) => {
     res.send("Page Not Found")
 })
+
+const weatherData = require('./utils/data')
 
 port = process.env.PORT
 
