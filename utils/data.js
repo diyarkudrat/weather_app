@@ -1,8 +1,8 @@
 const request = require('request');
 const params = require('../config');
 
-const weatherData = (address, callback) => {
-    const url = params.weatherMap.URL + encodeURIComponent(address) + '&appid=' + params.weatherMap.SECRET_KEY
+const weatherData = (city, callback) => {
+    const url = params.weatherMap.URL + encodeURIComponent(city) + '&appid=' + params.weatherMap.SECRET_KEY
     console.log(url);
     request({url, json:true}, (err, {body}) => {
         console.log(body);
@@ -10,10 +10,10 @@ const weatherData = (address, callback) => {
             callback("Can't fetch data", undefined)
         } else {
             callback(undefined, {
-                test: true
+                abc: true
             })
         }
     })
 }
 
-module.exports = weatherData
+module.exports = weatherData;

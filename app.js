@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    const address = req.query.address
-    weatherData(address, (result) => {
+    const city = req.query.city
+    weatherData(city, (result) => {
         console.log(result)
     })
 })
