@@ -8,6 +8,8 @@ const weatherData = (city, callback) => {
         console.log(body)
         if(err) {
             callback("Can't fetch data", undefined)
+        } else if (!body.main || !body.main.temp || !body.weather || !body.name ) {
+            callback("unable to find data, try another location", undefined)
         } else {
             callback(undefined, {
                 temperature: body.main.temp,

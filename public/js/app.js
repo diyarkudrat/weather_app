@@ -21,8 +21,8 @@ weatherForm.addEventListener('submit', (event) => {
     const weatherApi = fetchWeather + "?city=" + searchInput.value
     fetch(weatherApi).then(res => {
         res.json().then(data => {
-            if(data.error) {
-                locationElement.textContent = data.error;
+            if(data.err) {
+                locationElement.textContent = data.err;
                 tempElement.textContent = '';
                 weatherCondition.textContent = '';
             } else {
