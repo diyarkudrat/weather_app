@@ -1,29 +1,30 @@
-const express = require('express')
-const app = express()
-const path = require("path")
-const exphbs = require('hbs');
-const bodyParser = require('body-parser');
+
+const express = require('express');
+const hbs = require("hbs");
+const path = require("path");
+const app = express();
+
+const weatherData = require('./utils/data');
 
 require('dotenv').config();
 
-const publicStaticDirPath = path.join(__dirname, '../public')
-const viewsPath = path.join(__dirname, '../views')
-const partialsPath = path.join(__dirname, '../views/partials')
+const publicStaticDirPath = path.join(__dirname, './public')
 
+const viewsPath = path.join(__dirname, './views');
 
-app.set('view engine', 'exphbs',);
+const partialsPath = path.join(__dirname, './views/partials');
+
+app.set('view engine', 'hbs');
 app.set('views', viewsPath);
-exphbs.registerPartials(partialsPath);
-app.use(express.static(publicStaticDirPath))
+hbs.registerPartials(partialsPath);
+app.use(express.static(publicStaticDirPath));
 
-const weatherData = require('./utils/data')
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
-    res.send("hello")
+    res.render('index', {
+        title: 'Weather App'
+    })
 })
 
 app.get('/weather', (req, res) => {
@@ -56,9 +57,6 @@ app.get('*', (req, res) => {
 port = process.env.PORT
 
 app.listen(port, () => {
-    mongoose = require('mongoose')
-    const mongo_uri = process.env.MONGODB_URI
-    mongoose.connect(mongo_uri)
     console.log(`listening on localhost:${port}`)
 });
 
